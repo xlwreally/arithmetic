@@ -47,26 +47,16 @@ public class 逆波兰 {
                         number.push(String.valueOf(operator.pop()));
                     }
                     operator.pop();
-                }else if(text.charAt(i)=='*'||text.charAt(i)=='/'||text.charAt(i)=='+'||text.charAt(i)=='-') {
-                    if (operator.empty()){
-                        operator.push(text.charAt(i));
+                }else if(text.charAt(i)=='*'||text.charAt(i)=='/') {
+                    while (!operator.empty()&&(operator.peek() == '*' || operator.peek() == '/' )){
+                        number.push(String.valueOf(operator.pop()));
                     }
-                    else if((text.charAt(i)=='*'||text.charAt(i)=='/')&&(operator.peek()=='+'||operator.peek()=='-')){
-                        operator.push(text.charAt(i));
-                    }else {
-                            while (!operator.empty()) {
-                                if(operator.peek() == '('){
-                                    operator.push(text.charAt(i));
-                                    break;
-                                }
-
-                                number.push(String.valueOf(operator.pop()));
-                                if (operator.empty()||(operator.peek() == '+' || operator.peek() == '-' )) {
-                                    operator.push(text.charAt(i));
-                                    break;
-                                }
-                            }
+                    operator.push(text.charAt(i));
+                }else if(text.charAt(i)=='+'||text.charAt(i)=='-') {
+                    while (!operator.empty() && operator.peek() != '(') {
+                        number.push(String.valueOf(operator.pop()));
                     }
+                    operator.push(text.charAt(i));
                 }
             }
 
